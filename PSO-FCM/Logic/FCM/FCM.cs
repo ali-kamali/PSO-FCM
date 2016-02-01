@@ -17,6 +17,7 @@ namespace PSO_FCM.Logic.FCM
         public Dim[] Centers { get; set; } //Centers
         public List<Data> Datas { get; set; }
 
+
         public Fcm(int c, int n, double m, int num, int dim, List<Data> datas, double[,] u)
         {
             C = c;

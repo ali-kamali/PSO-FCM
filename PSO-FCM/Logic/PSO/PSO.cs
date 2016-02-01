@@ -38,7 +38,7 @@ namespace PSO_FCM.Logic.PSO
             W = w;
             C1 = c1;
             C2 = c2;
-            GloablBestError = double.MaxValue;
+            GloablBestError = double.MinValue;
             GloablBestPosition=new Dim[c];
             Particles = new List<Particle>();
             for (int a = 0; a < Num; a++)
@@ -52,8 +52,8 @@ namespace PSO_FCM.Logic.PSO
                     Position = new Dim[c],
                     BestPosition = new Dim[c],
                     Velocity = new Dim[c],
-                    Error = Double.MaxValue,
-                    BestError = Double.MaxValue,
+                    Error = Double.MinValue,
+                    BestError = Double.MinValue,
 
                 };
                 for (int i = 0; i < c; i++)
@@ -88,7 +88,7 @@ namespace PSO_FCM.Logic.PSO
             foreach (Particle particle in Particles)
             {
                 particle.CalcError(Datas,M);
-                if (particle.BestError > particle.Error)
+                if (particle.BestError < particle.Error)
                 {
                     particle.BestError = particle.Error;
                     particle.BestPosition = particle.Position;
@@ -97,7 +97,7 @@ namespace PSO_FCM.Logic.PSO
             var bestp = Particles.OrderBy(p => p.BestError).FirstOrDefault();
             if (bestp != null)
             {
-                if (GloablBestError > bestp.BestError)
+                if (GloablBestError < bestp.BestError)
                 {
                     GloablBestError = bestp.BestError;
                     GloablBestPosition = bestp.BestPosition;

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PSO_FCM.Logic.FCM;
 using PSO_FCM.Logic.PSO;
 using PSO_FCM.Utility;
 
@@ -28,8 +29,11 @@ namespace PSO_FCM
             double w = GeneralCom.GetRandom(0.1, 0.9);
             double c1 = GeneralCom.GetRandom(0.1, 0.9);
             double c2 = GeneralCom.GetRandom(0.1, 0.9);
-            double rate = Math.Pow(10, -100);
-            Pso ps = new Pso(3, data.Count, 2, w, c1, c2, 30, data[0].DataDim.Val.Length, data);
+            double rate = Math.Pow(10, -10);
+            int c = 3;
+            int m = 2;
+            int n = data.Count;
+            Pso ps = new Pso(c, n, m, w, c1, c2, 30, data[0].DataDim.Val.Length, data);
             File.WriteAllText("log", "");
             for (int i = 0; i < 200; i++)
             {
@@ -38,6 +42,7 @@ namespace PSO_FCM
                 if(ps.Variance<rate)
                     break;
             }
+
             File.WriteAllText("datares", "");
             for (int i = 0; i < ps.N; i++)
             {
@@ -47,7 +52,24 @@ namespace PSO_FCM
                 }
                 File.AppendAllText("datares", "\t\n");
             }
-            MessageBox.Show("d");
+            Fcm fc=new Fcm(c,n,m,30,data[0].DataDim.Val.Length,data,ps.U);
+            
+            File.WriteAllText("datafcm", "");
+            for (int a = 0; a < 100; a++)
+            {
+                fc.CalcCenter();
+                fc.CalcU();
+                for (int i = 0; i < ps.N; i++)
+                {
+                    for (int j = 0; j < ps.C; j++)
+                    {
+                        File.AppendAllText("datafcm", fc.U[i, j].ToString(CultureInfo.InvariantCulture) + ";");
+                    }
+                    File.AppendAllText("datafcm", "\t\n");
+                }
+                File.AppendAllText("datafcm", "\t\n--\t\n");
+            }
+
         }
     }
 }

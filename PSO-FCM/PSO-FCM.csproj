@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="Logic\Data.cs" />
     <Compile Include="Logic\Dim.cs" />
+    <Compile Include="Logic\FCM\FCM.cs" />
     <Compile Include="Logic\PSO\Particle.cs" />
     <Compile Include="Logic\PSO\PSO.cs" />
     <Compile Include="Program.cs" />

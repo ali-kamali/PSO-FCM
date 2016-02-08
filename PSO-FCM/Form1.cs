@@ -26,9 +26,9 @@ namespace PSO_FCM
         {
             var data = Loader.LoadData();
             MessageBox.Show(data[0].CluseterName);
-            double w = GeneralCom.GetRandom(0.1, 0.9);
-            double c1 = GeneralCom.GetRandom(0.1, 0.9);
-            double c2 = GeneralCom.GetRandom(0.1, 0.9);
+            double w = 1;//GeneralCom.GetRandom(0.1, 0.9);
+            double c1 = 2;//GeneralCom.GetRandom(0.1, 0.9);
+            double c2 = 2;//GeneralCom.GetRandom(0.1, 0.9);
             double rate = Math.Pow(10, -10);
             int c = 3;
             int m = 2;

@@ -67,7 +67,7 @@ namespace PSO_FCM.Logic.PSO
                     for (int j = 0; j < D; j++)
                     {
                         p.Position[i].Val[j] = GeneralCom.GetRandom();
-                        //p.Velocity[i].Val[j] = GeneralCom.GetRandom();
+                        p.Velocity[i].Val[j] = GeneralCom.GetRandom();
                         if (a == 0)
                         {
                             GloablBestPosition[i].Val[j] = GeneralCom.GetRandom();

@@ -26,8 +26,11 @@ namespace PSO_FCM.Logic.PSO
         public double[,] U { get; set; }//Matrix
         public double Variance { get; set; } //Variance
         public List<Data> Datas { get; set; }
-        public Pso(int c, int n, double m, double w, double c1, double c2, int num, int dim, List<Data> datas)
+
+        public double[] Maxd { get; set; }//Matrix
+        public Pso(int c, int n, double m, double w, double c1, double c2, int num, int dim, List<Data> datas,double[] maxd)
         {
+            Maxd = maxd;
             C = c;
             N = n;
             M = m;
@@ -66,11 +69,11 @@ namespace PSO_FCM.Logic.PSO
                     }
                     for (int j = 0; j < D; j++)
                     {
-                        p.Position[i].Val[j] = GeneralCom.GetRandom();
-                        p.Velocity[i].Val[j] = GeneralCom.GetRandom();
+                        p.Position[i].Val[j] = GeneralCom.GetRandom(0,Maxd[j]);
+                        p.Velocity[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
                         if (a == 0)
                         {
-                            GloablBestPosition[i].Val[j] = GeneralCom.GetRandom();
+                            GloablBestPosition[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
                         }
                     }
                 }
@@ -94,7 +97,7 @@ namespace PSO_FCM.Logic.PSO
                     particle.BestPosition = particle.Position;
                 }
             }
-            var bestp = Particles.OrderBy(p => p.BestError).FirstOrDefault();
+            var bestp = Particles.OrderByDescending(p => p.BestError).FirstOrDefault();
             if (bestp != null)
             {
                 if (GloablBestError < bestp.BestError)

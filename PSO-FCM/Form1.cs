@@ -29,11 +29,19 @@ namespace PSO_FCM
             double w = 1;//GeneralCom.GetRandom(0.1, 0.9);
             double c1 = 2;//GeneralCom.GetRandom(0.1, 0.9);
             double c2 = 2;//GeneralCom.GetRandom(0.1, 0.9);
-            double rate = Math.Pow(10, -10);
+            double rate = Math.Pow(10, -30);
             int c = 3;
             int m = 2;
             int n = data.Count;
-            Pso ps = new Pso(c, n, m, w, c1, c2, 30, data[0].DataDim.Val.Length, data);
+            double[] MaxD = new double[data[0].DataDim.Val.Length];
+            for (int i = 0; i < data[0].DataDim.Val.Length; i++)
+            {
+                for (int j = 0; j < data.Count; j++)
+                {
+                    MaxD[i] = Math.Max(data[j].DataDim.Val[i], MaxD[i]);
+                }
+            }
+            Pso ps = new Pso(c, n, m, w, c1, c2, 30, data[0].DataDim.Val.Length, data,MaxD);
             File.WriteAllText("log", "");
             for (int i = 0; i < 200; i++)
             {

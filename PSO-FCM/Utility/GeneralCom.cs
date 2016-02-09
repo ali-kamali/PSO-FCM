@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using PSO_FCM.Logic;
 
@@ -17,9 +18,14 @@ namespace PSO_FCM.Utility
             return Math.Sqrt(sumsq);
         }
 
-        public static double GetRandom(double min = 0, double max=100)
+        public static double GetRandom(double min = 0, double max=1000)
         {
-            return (double)Rand.Next((int) (min*100), (int) (max*100))/100;
+            var d = (double) Rand.Next((int) (min*100), (int) (max*100))/100;
+            if (Math.Abs(max - 1000) < 0.5)
+            {
+                File.AppendAllText("logD", d + "\t\n");
+            }
+            return d;
         }
     }
 }

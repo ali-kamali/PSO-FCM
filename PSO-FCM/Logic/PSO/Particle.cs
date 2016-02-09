@@ -29,12 +29,14 @@ namespace PSO_FCM.Logic.PSO
                     {
                         var a = GeneralCom.Euclideandistance(datas[i].DataDim, Position[j]);
                         var b = GeneralCom.Euclideandistance(datas[i].DataDim, Position[k]);
+                        File.AppendAllText("logU", "a;" + a + "\t\n");
+                        File.AppendAllText("logU", "b;" + b + "\t\n");
                         sum += Math.Pow((a / b), 2 / (m - 1));
                     }
                     U[i, j] = 1 / sum;
-                   // File.AppendAllText("data.res", U[i, j].ToString(CultureInfo.InvariantCulture) + ";");
+                    File.AppendAllText("dataa", U[i, j].ToString(CultureInfo.InvariantCulture) + ";");
                 }
-                //File.AppendAllText("data.res", "\t\n");
+                File.AppendAllText("dataa", "\t\n");
             }
         }
 
@@ -74,7 +76,10 @@ namespace PSO_FCM.Logic.PSO
                              Math.Pow(GeneralCom.Euclideandistance(datas[i].DataDim, Position[j]), 2);
                 }
             }
+            
             Error = 1/(sigma+1);
+            File.AppendAllText("dataa", "\t\n" + Error + "\t\n\t\n");
+
         }
 
     }

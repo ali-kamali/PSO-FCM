@@ -8,6 +8,8 @@ namespace PSO_FCM.Logic.PSO
 {
     public class Particle
     {
+        public int Index { get; set; }
+        public int Iteration { get; set; }
         public Dim[] Position { get; set; }
         public double Error { get; set; }
         public double Fitness { get; set; }
@@ -50,36 +52,49 @@ namespace PSO_FCM.Logic.PSO
                 {
                     double y1 = GeneralCom.GetRandom(0, 1);
                     double y2 = GeneralCom.GetRandom(0, 1);
-                    Velocity[c].Val[d] = w * Velocity[c].Val[d] + c1 * y1*(BestPosition[c].Val[d]-Position[c].Val[d])
-                        + c2 * y2 * (globalPosition[c].Val[d] - Position[c].Val[d]);
+                    double c1y1 = c1*y1;
+                    double c2y2 = c2*y2;
+                    Velocity[c].Val[d] = 
+                        w * Velocity[c].Val[d] +
+                        c1y1 * (BestPosition[c].Val[d] - Position[c].Val[d])
+                        + c2y2 * (globalPosition[c].Val[d] - Position[c].Val[d]);
                 }
             }
         }
 
         public void UpdatePost()
         {
+            string[] temp = new string[C];
             for (int c = 0; c < C; c++)
             {
                 for (int d = 0; d < Velocity[c].Val.Length; d++)
                 {
                     Position[c].Val[d] = Position[c].Val[d]+ Velocity[c].Val[d];
+                    temp[c] += Position[c].Val[d] + ";";
                 }
+                //File.AppendAllText("FitnessParticle"+Index, Fitness + ";" + Index + ";" + Iteration + ";" + BestFitness + ";"+c+";" +temp[c]+ "\t\n");
             }
         }
 
         public void CalcError(List<Data> datas,double m)
         {
             double sigma = 0;
+            
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < C; j++)
                 {
                     sigma += Math.Pow(U[i, j], m)*
                              Math.Pow(GeneralCom.Euclideandistance(datas[i].DataDim, Position[j]), 2);
+                    
+                    
                 }
             }
+            Iteration++;
             Fitness = sigma;
-            File.AppendAllText("FitnessParticle", Fitness + "\t\n");
+            
+           // File.AppendAllText("FitnessParticle", Fitness + ";" + Index + ";" + Iteration + ";" + BestFitness + ";" + "\t\n");
+            
             Error = 1/(sigma+1);
             //File.AppendAllText("dataa", "\t\n" + Error + "\t\n\t\n");
 

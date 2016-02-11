@@ -14,6 +14,7 @@ namespace PSO_FCM.Logic.PSO
         public List<Particle> Particles { get; set; }
         public Dim[] GloablBestPosition { get; set; }
         public double GloablBestError { get; set; }
+        public double GloablBestFitness { get; set; }
         public int C { get; set; } //number of clusters
         public int N { get; set; } //sample size
         public double M { get; set; } //Fuzzy exponent
@@ -28,7 +29,6 @@ namespace PSO_FCM.Logic.PSO
         public List<Data> Datas { get; set; }
 
         public double[] Maxd { get; set; }//Matrix
-        public double Fitness { get; set; }
         public Pso(int c, int n, double m, double w, double c1, double c2, int num, int dim, List<Data> datas,double[] maxd)
         {
             Maxd = maxd;
@@ -43,6 +43,7 @@ namespace PSO_FCM.Logic.PSO
             C1 = c1;
             C2 = c2;
             GloablBestError = double.MinValue;
+            GloablBestFitness = double.MaxValue;
             GloablBestPosition=new Dim[c];
             Particles = new List<Particle>();
             for (int a = 0; a < Num; a++)
@@ -58,6 +59,10 @@ namespace PSO_FCM.Logic.PSO
                     Velocity = new Dim[c],
                     Error = Double.MinValue,
                     BestError = Double.MinValue,
+                    Iteration = 0,
+                    Index = a,
+                    BestFitness = double.MaxValue,
+                    Fitness = double.MaxValue
 
                 };
                 for (int i = 0; i < c; i++)
@@ -71,7 +76,7 @@ namespace PSO_FCM.Logic.PSO
                     for (int j = 0; j < D; j++)
                     {
                         p.Position[i].Val[j] = GeneralCom.GetRandom(0,Maxd[j]);
-                        p.Velocity[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
+                        //p.Velocity[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
                         if (a == 0)
                         {
                             GloablBestPosition[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
@@ -91,23 +96,29 @@ namespace PSO_FCM.Logic.PSO
         {
             foreach (Particle particle in Particles)
             {
+                particle.CalcU(Datas, M);
                 particle.CalcError(Datas,M);
-                if (particle.BestError < particle.Error)
+                if (particle.BestFitness >= particle.Fitness)
                 {
                     particle.BestError = particle.Error;
                     particle.BestPosition = particle.Position;
                     particle.BestFitness = particle.Fitness;
+                    
                 }
+                //if (particle.Fitness < GloablBestFitness && GloablBestFitness!=double.MaxValue)
+                //{
+                //    MessageBox.Show("d");
+                //}
             }
-            var bestp = Particles.OrderByDescending(p => p.BestError).FirstOrDefault();
+            var bestp = Particles.OrderBy(p => p.BestFitness).FirstOrDefault();
             if (bestp != null)
             {
-                if (GloablBestError < bestp.BestError)
+                if (GloablBestFitness > bestp.BestFitness)
                 {
                     GloablBestError = bestp.BestError;
                     GloablBestPosition = bestp.BestPosition;
+                    GloablBestFitness = bestp.BestFitness;
                     U = bestp.U;
-                    Fitness = bestp.BestFitness;
                 }    
             }
             double xbar = 0;

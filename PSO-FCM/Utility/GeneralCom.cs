@@ -21,10 +21,6 @@ namespace PSO_FCM.Utility
         public static double GetRandom(double min = 0, double max=1000)
         {
             var d = (double) Rand.Next((int) (min*100), (int) (max*100))/100;
-            if (Math.Abs(max - 1000) < 0.5)
-            {
-                File.AppendAllText("logD", d + "\t\n");
-            }
             return d;
         }
     }

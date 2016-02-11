@@ -28,6 +28,7 @@ namespace PSO_FCM.Logic.PSO
         public List<Data> Datas { get; set; }
 
         public double[] Maxd { get; set; }//Matrix
+        public double Fitness { get; set; }
         public Pso(int c, int n, double m, double w, double c1, double c2, int num, int dim, List<Data> datas,double[] maxd)
         {
             Maxd = maxd;
@@ -95,6 +96,7 @@ namespace PSO_FCM.Logic.PSO
                 {
                     particle.BestError = particle.Error;
                     particle.BestPosition = particle.Position;
+                    particle.BestFitness = particle.Fitness;
                 }
             }
             var bestp = Particles.OrderByDescending(p => p.BestError).FirstOrDefault();
@@ -105,6 +107,7 @@ namespace PSO_FCM.Logic.PSO
                     GloablBestError = bestp.BestError;
                     GloablBestPosition = bestp.BestPosition;
                     U = bestp.U;
+                    Fitness = bestp.BestFitness;
                 }    
             }
             double xbar = 0;

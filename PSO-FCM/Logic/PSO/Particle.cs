@@ -10,6 +10,8 @@ namespace PSO_FCM.Logic.PSO
     {
         public Dim[] Position { get; set; }
         public double Error { get; set; }
+        public double Fitness { get; set; }
+        public double BestFitness { get; set; }
         public Dim[] Velocity { get; set; }
         public Dim[] BestPosition { get; set; }
         public double BestError{ get; set; }
@@ -29,14 +31,14 @@ namespace PSO_FCM.Logic.PSO
                     {
                         var a = GeneralCom.Euclideandistance(datas[i].DataDim, Position[j]);
                         var b = GeneralCom.Euclideandistance(datas[i].DataDim, Position[k]);
-                        File.AppendAllText("logU", "a;" + a + "\t\n");
-                        File.AppendAllText("logU", "b;" + b + "\t\n");
+                      //  File.AppendAllText("logU", "a;" + a + "\t\n");
+                     //   File.AppendAllText("logU", "b;" + b + "\t\n");
                         sum += Math.Pow((a / b), 2 / (m - 1));
                     }
                     U[i, j] = 1 / sum;
-                    File.AppendAllText("dataa", U[i, j].ToString(CultureInfo.InvariantCulture) + ";");
+                   // File.AppendAllText("dataa", U[i, j].ToString(CultureInfo.InvariantCulture) + ";");
                 }
-                File.AppendAllText("dataa", "\t\n");
+               // File.AppendAllText("dataa", "\t\n");
             }
         }
 
@@ -76,9 +78,10 @@ namespace PSO_FCM.Logic.PSO
                              Math.Pow(GeneralCom.Euclideandistance(datas[i].DataDim, Position[j]), 2);
                 }
             }
-            
+            Fitness = sigma;
+            File.AppendAllText("FitnessParticle", Fitness + "\t\n");
             Error = 1/(sigma+1);
-            File.AppendAllText("dataa", "\t\n" + Error + "\t\n\t\n");
+            //File.AppendAllText("dataa", "\t\n" + Error + "\t\n\t\n");
 
         }
 

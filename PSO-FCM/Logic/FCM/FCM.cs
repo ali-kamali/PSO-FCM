@@ -16,6 +16,7 @@ namespace PSO_FCM.Logic.FCM
         public double[,] U { get; set; }//Matrix
         public Dim[] Centers { get; set; } //Centers
         public List<Data> Datas { get; set; }
+        public double Fitness { get; set; }
 
         public Fcm(int c, int n, double m, int num, int dim, List<Data> datas, double[,] u)
         {
@@ -71,6 +72,20 @@ namespace PSO_FCM.Logic.FCM
                     U[i, j] = 1 / sigma;
                 }
             }
+        }
+        public void CalcFitness(List<Data> datas, double m)
+        {
+            double sigma = 0;
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < C; j++)
+                {
+                    sigma += Math.Pow(U[i, j], m) *
+                             Math.Pow(GeneralCom.Euclideandistance(datas[i].DataDim, Centers[j]), 2);
+                }
+            }
+            Fitness = sigma;
+
         }
     }
 }

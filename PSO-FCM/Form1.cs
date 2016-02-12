@@ -189,7 +189,53 @@ namespace PSO_FCM
         }
         private void btn_PSOFCMRR_Click(object sender, EventArgs e)
         {
-            
+            var tempData=_data.OrderBy(x => Guid.NewGuid()).Take(15).ToList();
+            var now = DateTime.Now;
+
+            Pso ps = new Pso(C, _n, M, W, C1, C2, 30, _data[0].DataDim.Val.Length, tempData, _maxD);
+            for (int i = 0; i < 200; i++)
+            {
+                ps.Calc();
+                if (ps.Variance < _rate)
+                    break;
+            }
+            Fcm fc = new Fcm(C, _n, M, 30, _data[0].DataDim.Val.Length, _data, ps.U);
+            for (int a = 0; a < 100; a++)
+            {
+                fc.CalcCenter();
+                fc.CalcU();
+                fc.CalcFitness(_data, M);
+                //File.AppendAllText(DateSet + "//FitnessFCMPSO", fc.Fitness + "\t;\t" + DateTime.Now.Subtract(now).TotalSeconds + "\t\n");
+            }
+            for (int it = 0; it < 1000; it++)
+            {
+                tempData.AddRange(_data.OrderBy(x => Guid.NewGuid()).Take(15).ToList());
+                var aCenters=fc.Centers;
+                ps = new Pso(C, _n, M, W, C1, C2, 30, _data[0].DataDim.Val.Length, tempData, _maxD);
+                for (int i = 0; i < 200; i++)
+                {
+                    ps.Calc();
+                    if (ps.Variance < _rate)
+                        break;
+                }
+                fc = new Fcm(C, _n, M, 30, _data[0].DataDim.Val.Length, _data, ps.U);
+                for (int a = 0; a < 100; a++)
+                {
+                    fc.CalcCenter();
+                    fc.CalcU();
+                    fc.CalcFitness(_data, M);
+                }
+                double delta = 0;
+                for(int d=0;d<aCenters.Length;d++)
+                {
+                    delta = GeneralCom.Euclideandistance(aCenters[d], fc.Centers[d]);    
+                }
+                delta /= aCenters.Length;
+                MessageBox.Show(delta.ToString());
+
+            }
+
+
         }
 
         private void btn_AutoAll_Click(object sender, EventArgs e)

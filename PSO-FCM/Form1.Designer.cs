@@ -97,7 +97,6 @@
             this.btn_PSOFCMRR.TabIndex = 4;
             this.btn_PSOFCMRR.Text = "PSOFCMRR";
             this.btn_PSOFCMRR.UseVisualStyleBackColor = true;
-            this.btn_PSOFCMRR.Visible = false;
             this.btn_PSOFCMRR.Click += new System.EventHandler(this.btn_PSOFCMRR_Click);
             // 
             // btn_Pso10000

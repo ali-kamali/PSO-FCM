@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 
 namespace PSO_FCM.Logic
 {
@@ -12,6 +13,11 @@ namespace PSO_FCM.Logic
         public Dim(double[] data)
         {
             Val = data;
+        }
+
+        public override string ToString()
+        {
+            return Val.Aggregate("", (current, d) => current + (d + ","));
         }
     }
 }

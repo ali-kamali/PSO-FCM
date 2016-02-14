@@ -29,7 +29,7 @@ namespace PSO_FCM.Logic.PSO
         public List<Data> Datas { get; set; }
 
         public double[] Maxd { get; set; }//Matrix
-        public Pso(int c, int n, double m, double w, double c1, double c2, int num, int dim, List<Data> datas,double[] maxd)
+        public Pso(int c, int n, double m, double w, double c1, double c2, int num, int dim, List<Data> datas,double[] maxd,Dim[] pastCenters=null)
         {
             Maxd = maxd;
             C = c;
@@ -48,14 +48,14 @@ namespace PSO_FCM.Logic.PSO
             Particles = new List<Particle>();
             for (int a = 0; a < Num; a++)
             {
-                
+
                 Particle p = new Particle
                 {
                     U = new double[N, c],
                     C = c,
                     N = n,
-                    Position = new Dim[c],
-                    BestPosition = new Dim[c],
+                    Position = a == 0 && pastCenters != null ? pastCenters : new Dim[c],
+                    BestPosition = a == 0 && pastCenters != null ? pastCenters : new Dim[c],
                     Velocity = new Dim[c],
                     Error = Double.MinValue,
                     BestError = Double.MinValue,
@@ -65,26 +65,38 @@ namespace PSO_FCM.Logic.PSO
                     Fitness = double.MaxValue
 
                 };
-                for (int i = 0; i < c; i++)
+                if (a == 0 && pastCenters != null)
                 {
-                    p.Position[i] = new Dim(D);
-                    p.Velocity[i] = new Dim(D);
-                    if (a == 0)
+                    p.Position = pastCenters;
+                    p.BestPosition = pastCenters;
+                    GloablBestPosition = pastCenters;
+                    for (int i = 0; i < c; i++)
                     {
-                        GloablBestPosition[i]= new Dim(D);
+                        p.Velocity[i] = new Dim(D);
                     }
-                    for (int j = 0; j < D; j++)
+                }
+                else
+                {
+                    for (int i = 0; i < c; i++)
                     {
-                        p.Position[i].Val[j] = GeneralCom.GetRandom(0,Maxd[j]);
-                        //p.Velocity[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
+                        p.Position[i] = new Dim(D);
+                        p.Velocity[i] = new Dim(D);
                         if (a == 0)
                         {
-                            GloablBestPosition[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
+                            GloablBestPosition[i] = new Dim(D);
+                        }
+                        for (int j = 0; j < D; j++)
+                        {
+                            p.Position[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
+                            //p.Velocity[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
+                            if (a == 0)
+                            {
+                                GloablBestPosition[i].Val[j] = GeneralCom.GetRandom(0, Maxd[j]);
+                            }
                         }
                     }
                 }
                 p.BestPosition = p.Position;
-                
                 p.CalcU(datas, M);
                 p.CalcV(W, C1, C2, GloablBestPosition);
                 Particles.Add(p);

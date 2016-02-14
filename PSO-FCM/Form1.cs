@@ -189,9 +189,11 @@ namespace PSO_FCM
         }
         private void btn_PSOFCMRR_Click(object sender, EventArgs e)
         {
-            var tempData=_data.OrderBy(x => Guid.NewGuid()).Take(15).ToList();
+            _data = _data.OrderBy(x => Guid.NewGuid()).ToList();
+            int step = 100;
+            var tempData = _data.Skip(0).Take(step).ToList();
             var now = DateTime.Now;
-
+            _n=tempData.Count;
             Pso ps = new Pso(C, _n, M, W, C1, C2, 30, _data[0].DataDim.Val.Length, tempData, _maxD);
             for (int i = 0; i < 200; i++)
             {
@@ -199,7 +201,7 @@ namespace PSO_FCM
                 if (ps.Variance < _rate)
                     break;
             }
-            Fcm fc = new Fcm(C, _n, M, 30, _data[0].DataDim.Val.Length, _data, ps.U);
+            Fcm fc = new Fcm(C, _n, M, 30, _data[0].DataDim.Val.Length, tempData, ps.U);
             for (int a = 0; a < 100; a++)
             {
                 fc.CalcCenter();
@@ -207,18 +209,19 @@ namespace PSO_FCM
                 fc.CalcFitness(_data, M);
                 //File.AppendAllText(DateSet + "//FitnessFCMPSO", fc.Fitness + "\t;\t" + DateTime.Now.Subtract(now).TotalSeconds + "\t\n");
             }
+            var aCenters = fc.Centers.OrderBy(p => p.Val[0]).ThenBy(p => p.Val[1]).ThenBy(p => p.Val[2]).ThenBy(p => p.Val[3]).ThenBy(p => p.Val[4]).ToArray();
             for (int it = 0; it < 1000; it++)
             {
-                tempData.AddRange(_data.OrderBy(x => Guid.NewGuid()).Take(15).ToList());
-                var aCenters=fc.Centers;
-                ps = new Pso(C, _n, M, W, C1, C2, 30, _data[0].DataDim.Val.Length, tempData, _maxD);
+                tempData.AddRange(_data.Skip(it*step+step).Take(step).ToList());
+                _n = tempData.Count;
+                ps = new Pso(C, _n, M, W, C1, C2, 30, _data[0].DataDim.Val.Length, tempData, _maxD,aCenters);
                 for (int i = 0; i < 200; i++)
                 {
                     ps.Calc();
                     if (ps.Variance < _rate)
                         break;
                 }
-                fc = new Fcm(C, _n, M, 30, _data[0].DataDim.Val.Length, _data, ps.U);
+                fc = new Fcm(C, _n, M, 30, _data[0].DataDim.Val.Length, tempData, ps.U);
                 for (int a = 0; a < 100; a++)
                 {
                     fc.CalcCenter();
@@ -226,16 +229,16 @@ namespace PSO_FCM
                     fc.CalcFitness(_data, M);
                 }
                 double delta = 0;
+                var bCenters = fc.Centers.OrderBy(p => p.Val[0]).ThenBy(p => p.Val[1]).ThenBy(p => p.Val[2]).ThenBy(p => p.Val[3]).ThenBy(p => p.Val[4]).ToArray();
                 for(int d=0;d<aCenters.Length;d++)
                 {
-                    delta = GeneralCom.Euclideandistance(aCenters[d], fc.Centers[d]);    
+                    delta += GeneralCom.Euclideandistance(aCenters[d], bCenters[d]);    
                 }
                 delta /= aCenters.Length;
-                MessageBox.Show(delta.ToString());
-
+                File.AppendAllText(DateSet + "//RRR100", delta + "\t;\t" + fc.Fitness + "\t;\t" + DateTime.Now.Subtract(now).TotalSeconds + "\t;\t" + aCenters.Aggregate("", (current, d) => current + (d + "&")) + "\t;\t" + bCenters.Aggregate("", (current, d) => current + (d + "&")) + "\t\n");
+                aCenters = bCenters;
+                //MessageBox.Show(delta.ToString());
             }
-
-
         }
 
         private void btn_AutoAll_Click(object sender, EventArgs e)

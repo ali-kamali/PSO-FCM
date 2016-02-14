@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_Create1000X = new System.Windows.Forms.Button();
             this.cb_data = new System.Windows.Forms.ComboBox();
             this.btn_Load = new System.Windows.Forms.Button();
@@ -40,27 +41,30 @@
             // 
             // btn_Create1000X
             // 
-            this.btn_Create1000X.Location = new System.Drawing.Point(12, 12);
+            this.btn_Create1000X.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Create1000X.Location = new System.Drawing.Point(129, 183);
             this.btn_Create1000X.Name = "btn_Create1000X";
-            this.btn_Create1000X.Size = new System.Drawing.Size(83, 32);
+            this.btn_Create1000X.Size = new System.Drawing.Size(130, 32);
             this.btn_Create1000X.TabIndex = 0;
-            this.btn_Create1000X.Text = "Create 1000X";
+            this.btn_Create1000X.Text = "Create1000X";
             this.btn_Create1000X.UseVisualStyleBackColor = true;
             this.btn_Create1000X.Click += new System.EventHandler(this.btn_Create1000X_Click);
             // 
             // cb_data
             // 
+            this.cb_data.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_data.FormattingEnabled = true;
-            this.cb_data.Location = new System.Drawing.Point(133, 19);
+            this.cb_data.Location = new System.Drawing.Point(129, 14);
             this.cb_data.Name = "cb_data";
-            this.cb_data.Size = new System.Drawing.Size(121, 21);
+            this.cb_data.Size = new System.Drawing.Size(130, 26);
             this.cb_data.TabIndex = 1;
             // 
             // btn_Load
             // 
-            this.btn_Load.Location = new System.Drawing.Point(12, 50);
+            this.btn_Load.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Load.Location = new System.Drawing.Point(-1, 12);
             this.btn_Load.Name = "btn_Load";
-            this.btn_Load.Size = new System.Drawing.Size(83, 32);
+            this.btn_Load.Size = new System.Drawing.Size(130, 32);
             this.btn_Load.TabIndex = 2;
             this.btn_Load.Text = "LoadData";
             this.btn_Load.UseVisualStyleBackColor = true;
@@ -69,9 +73,10 @@
             // btn_FCM
             // 
             this.btn_FCM.Enabled = false;
-            this.btn_FCM.Location = new System.Drawing.Point(12, 88);
+            this.btn_FCM.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_FCM.Location = new System.Drawing.Point(-1, 145);
             this.btn_FCM.Name = "btn_FCM";
-            this.btn_FCM.Size = new System.Drawing.Size(83, 32);
+            this.btn_FCM.Size = new System.Drawing.Size(130, 32);
             this.btn_FCM.TabIndex = 3;
             this.btn_FCM.Text = "FCM";
             this.btn_FCM.UseVisualStyleBackColor = true;
@@ -80,9 +85,10 @@
             // btn_PSOFCM
             // 
             this.btn_PSOFCM.Enabled = false;
-            this.btn_PSOFCM.Location = new System.Drawing.Point(101, 88);
+            this.btn_PSOFCM.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_PSOFCM.Location = new System.Drawing.Point(-1, 183);
             this.btn_PSOFCM.Name = "btn_PSOFCM";
-            this.btn_PSOFCM.Size = new System.Drawing.Size(83, 32);
+            this.btn_PSOFCM.Size = new System.Drawing.Size(130, 32);
             this.btn_PSOFCM.TabIndex = 4;
             this.btn_PSOFCM.Text = "PSOFCM";
             this.btn_PSOFCM.UseVisualStyleBackColor = true;
@@ -91,9 +97,10 @@
             // btn_PSOFCMRR
             // 
             this.btn_PSOFCMRR.Enabled = false;
-            this.btn_PSOFCMRR.Location = new System.Drawing.Point(189, 88);
+            this.btn_PSOFCMRR.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_PSOFCMRR.Location = new System.Drawing.Point(129, 145);
             this.btn_PSOFCMRR.Name = "btn_PSOFCMRR";
-            this.btn_PSOFCMRR.Size = new System.Drawing.Size(83, 32);
+            this.btn_PSOFCMRR.Size = new System.Drawing.Size(130, 32);
             this.btn_PSOFCMRR.TabIndex = 4;
             this.btn_PSOFCMRR.Text = "PSOFCMRR";
             this.btn_PSOFCMRR.UseVisualStyleBackColor = true;
@@ -102,9 +109,10 @@
             // btn_Pso10000
             // 
             this.btn_Pso10000.Enabled = false;
-            this.btn_Pso10000.Location = new System.Drawing.Point(12, 126);
+            this.btn_Pso10000.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Pso10000.Location = new System.Drawing.Point(-1, 220);
             this.btn_Pso10000.Name = "btn_Pso10000";
-            this.btn_Pso10000.Size = new System.Drawing.Size(83, 32);
+            this.btn_Pso10000.Size = new System.Drawing.Size(130, 32);
             this.btn_Pso10000.TabIndex = 5;
             this.btn_Pso10000.Text = "PSO 100000";
             this.btn_Pso10000.UseVisualStyleBackColor = true;
@@ -112,9 +120,10 @@
             // 
             // btn_AutoAll
             // 
-            this.btn_AutoAll.Location = new System.Drawing.Point(12, 182);
+            this.btn_AutoAll.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_AutoAll.Location = new System.Drawing.Point(129, 220);
             this.btn_AutoAll.Name = "btn_AutoAll";
-            this.btn_AutoAll.Size = new System.Drawing.Size(83, 32);
+            this.btn_AutoAll.Size = new System.Drawing.Size(130, 32);
             this.btn_AutoAll.TabIndex = 6;
             this.btn_AutoAll.Text = "Auto All";
             this.btn_AutoAll.UseVisualStyleBackColor = true;
@@ -124,7 +133,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.BackgroundImage = global::PSO_FCM.Properties.Resources._1455495121_swarm_app;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ClientSize = new System.Drawing.Size(262, 262);
             this.Controls.Add(this.btn_AutoAll);
             this.Controls.Add(this.btn_Pso10000);
             this.Controls.Add(this.btn_PSOFCMRR);
@@ -133,8 +144,10 @@
             this.Controls.Add(this.btn_Load);
             this.Controls.Add(this.cb_data);
             this.Controls.Add(this.btn_Create1000X);
+            this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "PSO FCM Swarm";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
